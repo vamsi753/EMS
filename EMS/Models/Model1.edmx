@@ -1,0 +1,137 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="EMSModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="DeptMaster">
+          <Key>
+            <PropertyRef Name="DeptCode" />
+          </Key>
+          <Property Name="DeptCode" Type="int" Nullable="false" />
+          <Property Name="DeptName" Type="nvarchar" MaxLength="255" />
+        </EntityType>
+        <EntityType Name="EmpProfile">
+          <Key>
+            <PropertyRef Name="EmpCode" />
+          </Key>
+          <Property Name="EmpCode" Type="int" Nullable="false" />
+          <Property Name="DateOfBirth" Type="date" />
+          <Property Name="EmpName" Type="nvarchar" MaxLength="255" />
+          <Property Name="Email" Type="nvarchar" MaxLength="255" />
+          <Property Name="DeptCode" Type="int" />
+        </EntityType>
+        <Association Name="FK__EmpProfil__DeptC__398D8EEE">
+          <End Role="DeptMaster" Type="Self.DeptMaster" Multiplicity="0..1" />
+          <End Role="EmpProfile" Type="Self.EmpProfile" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DeptMaster">
+              <PropertyRef Name="DeptCode" />
+            </Principal>
+            <Dependent Role="EmpProfile">
+              <PropertyRef Name="DeptCode" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="EMSModelStoreContainer">
+          <EntitySet Name="DeptMaster" EntityType="Self.DeptMaster" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="EmpProfile" EntityType="Self.EmpProfile" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK__EmpProfil__DeptC__398D8EEE" Association="Self.FK__EmpProfil__DeptC__398D8EEE">
+            <End Role="DeptMaster" EntitySet="DeptMaster" />
+            <End Role="EmpProfile" EntitySet="EmpProfile" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="EMSModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="DeptMaster">
+          <Key>
+            <PropertyRef Name="DeptCode" />
+          </Key>
+          <Property Name="DeptCode" Type="Int32" Nullable="false" />
+          <Property Name="DeptName" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="EmpProfiles" Relationship="Self.FK__EmpProfil__DeptC__398D8EEE" FromRole="DeptMaster" ToRole="EmpProfile" />
+        </EntityType>
+        <EntityType Name="EmpProfile">
+          <Key>
+            <PropertyRef Name="EmpCode" />
+          </Key>
+          <Property Name="EmpCode" Type="Int32" Nullable="false" />
+          <Property Name="DateOfBirth" Type="DateTime" Precision="0" />
+          <Property Name="EmpName" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="Email" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="DeptCode" Type="Int32" />
+          <NavigationProperty Name="DeptMaster" Relationship="Self.FK__EmpProfil__DeptC__398D8EEE" FromRole="EmpProfile" ToRole="DeptMaster" />
+        </EntityType>
+        <Association Name="FK__EmpProfil__DeptC__398D8EEE">
+          <End Role="DeptMaster" Type="Self.DeptMaster" Multiplicity="0..1" />
+          <End Role="EmpProfile" Type="Self.EmpProfile" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DeptMaster">
+              <PropertyRef Name="DeptCode" />
+            </Principal>
+            <Dependent Role="EmpProfile">
+              <PropertyRef Name="DeptCode" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="EMSEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="DeptMasters" EntityType="Self.DeptMaster" />
+          <EntitySet Name="EmpProfiles" EntityType="Self.EmpProfile" />
+          <AssociationSet Name="FK__EmpProfil__DeptC__398D8EEE" Association="Self.FK__EmpProfil__DeptC__398D8EEE">
+            <End Role="DeptMaster" EntitySet="DeptMasters" />
+            <End Role="EmpProfile" EntitySet="EmpProfiles" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="EMSModelStoreContainer" CdmEntityContainer="EMSEntities">
+          <EntitySetMapping Name="DeptMasters">
+            <EntityTypeMapping TypeName="EMSModel.DeptMaster">
+              <MappingFragment StoreEntitySet="DeptMaster">
+                <ScalarProperty Name="DeptCode" ColumnName="DeptCode" />
+                <ScalarProperty Name="DeptName" ColumnName="DeptName" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="EmpProfiles">
+            <EntityTypeMapping TypeName="EMSModel.EmpProfile">
+              <MappingFragment StoreEntitySet="EmpProfile">
+                <ScalarProperty Name="EmpCode" ColumnName="EmpCode" />
+                <ScalarProperty Name="DateOfBirth" ColumnName="DateOfBirth" />
+                <ScalarProperty Name="EmpName" ColumnName="EmpName" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="DeptCode" ColumnName="DeptCode" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

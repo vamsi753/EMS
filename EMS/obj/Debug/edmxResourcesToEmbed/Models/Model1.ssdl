@@ -1,0 +1,40 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="EMSModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="DeptMaster">
+    <Key>
+      <PropertyRef Name="DeptCode" />
+    </Key>
+    <Property Name="DeptCode" Type="int" Nullable="false" />
+    <Property Name="DeptName" Type="nvarchar" MaxLength="255" />
+  </EntityType>
+  <EntityType Name="EmpProfile">
+    <Key>
+      <PropertyRef Name="EmpCode" />
+    </Key>
+    <Property Name="EmpCode" Type="int" Nullable="false" />
+    <Property Name="DateOfBirth" Type="date" />
+    <Property Name="EmpName" Type="nvarchar" MaxLength="255" />
+    <Property Name="Email" Type="nvarchar" MaxLength="255" />
+    <Property Name="DeptCode" Type="int" />
+  </EntityType>
+  <Association Name="FK__EmpProfil__DeptC__398D8EEE">
+    <End Role="DeptMaster" Type="Self.DeptMaster" Multiplicity="0..1" />
+    <End Role="EmpProfile" Type="Self.EmpProfile" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="DeptMaster">
+        <PropertyRef Name="DeptCode" />
+      </Principal>
+      <Dependent Role="EmpProfile">
+        <PropertyRef Name="DeptCode" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="EMSModelStoreContainer">
+    <EntitySet Name="DeptMaster" EntityType="Self.DeptMaster" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="EmpProfile" EntityType="Self.EmpProfile" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK__EmpProfil__DeptC__398D8EEE" Association="Self.FK__EmpProfil__DeptC__398D8EEE">
+      <End Role="DeptMaster" EntitySet="DeptMaster" />
+      <End Role="EmpProfile" EntitySet="EmpProfile" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>
